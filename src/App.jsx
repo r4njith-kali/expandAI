@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 function App() {
   const [idea, setIdea] = useState("");
-  const [entered, setEntered] = useState(false); 
+  const [entered, setEntered] = useState(false);
   const [subIdeas, setSubIdeas] = useState([]);
 
   const handleClick = () => {
@@ -12,7 +12,7 @@ function App() {
 
   const generateSubIdeas = (main) => {
     return [
-      `What is ${main}?`,         
+      `What is ${main}?`,
       `${main} examples`,
       `${main} problems`,
       `Future of ${main}`
@@ -60,7 +60,7 @@ function App() {
           return (
             <div
               key={index}
-              className="absolute bg-green-500 rounded-full w-28 h-28 flex items-center justify-center text-center"
+              className="absolute bg-green-500 text-white rounded-full w-28 h-28 flex items-center justify-center text-center"
               style={{
                 top: `calc(50% + ${y}px - 56px)`,
                 left: `calc(50% + ${x}px - 56px)`
