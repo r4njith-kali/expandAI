@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 function App() {
   const [idea, setIdea] = useState("");
-  const [entered, setEntered] = useState(false); // 🔧 'constant' should be 'const'
+  const [entered, setEntered] = useState(false); 
   const [subIdeas, setSubIdeas] = useState([]);
 
   const handleClick = () => {
@@ -12,7 +12,7 @@ function App() {
 
   const generateSubIdeas = (main) => {
     return [
-      `What is ${main}?`,         // 🔧 Use backticks `` for template literals
+      `What is ${main}?`,         
       `${main} examples`,
       `${main} problems`,
       `Future of ${main}`
