@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 
 function App() {
-
   const [idea, setIdea] = useState("");
-
-  constant [entered, setEntered] = useState(false);
+  const [entered, setEntered] = useState(false); // 🔧 'constant' should be 'const'
+  const [subIdeas, setSubIdeas] = useState([]);
 
   const handleClick = () => {
     setSubIdeas(generateSubIdeas(idea));
@@ -13,44 +12,66 @@ function App() {
 
   const generateSubIdeas = (main) => {
     return [
-      'What is ${main}?',
-      '${main} examples',
-      '${main} problems',
-      'Future of ${main}'
+      `What is ${main}?`,         // 🔧 Use backticks `` for template literals
+      `${main} examples`,
+      `${main} problems`,
+      `Future of ${main}`
     ];
   };
 
-  const [subIdeas, setSubIdeas] = useState([]);
-
+  const angles = [0, 90, 180, 270];
+  const radius = 200;
 
   return (
-    <div className="relative w-full h-screen">
-      {/* Centre Bubble */}
-      <div className = "absolute top-1/2 left-1/2 transform -transform-x-1/2 -translate-y-1/2 bg-blue-400 text-white rounded-full w-32 h-32 flex items-center justify-centre">
-        {idea}
-      </div>
-
-      {/*Sub bubbles*/}
-      {subIdeas.map((sub,index) => {
-        const angles = [0,90,180,270];
-        const radius = 200;
-        const rad = (angles[index] * Math.PI) / 180;
-
-        return (
-          <div 
-            key = {index}
-            className = "absolute bg-green-500 text-white rounded-full w-28 h-28 flex items-center justify-center"
-            style = {{
-              top: 'calc(50% + ${radius* Math.sin(rad)}px - 56px',
-              left: 'calc(50% + ${radius* Math.cos(rad)}px - 56px'
-            }}
+    <div className="relative w-full h-screen bg-gray-900 text-white">
+      {/* Prompt Input */}
+      {!entered && (
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <input
+            type="text"
+            value={idea}
+            onChange={(e) => setIdea(e.target.value)}
+            placeholder="Enter your idea..."
+            className="p-2 rounded-md text-black"
+          />
+          <button
+            onClick={handleClick}
+            className="ml-2 p-2 bg-blue-600 rounded-md"
           >
-            {sub}
-          </div>
-        );
-      })}
+            Enter
+          </button>
+        </div>
+      )}
+
+      {/* Center Bubble */}
+      {entered && (
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-400 rounded-full w-32 h-32 flex items-center justify-center text-white text-center">
+          {idea}
+        </div>
+      )}
+
+      {/* Sub-Ideas Bubbles */}
+      {entered &&
+        subIdeas.map((sub, index) => {
+          const rad = (angles[index] * Math.PI) / 180;
+          const x = radius * Math.cos(rad);
+          const y = radius * Math.sin(rad);
+
+          return (
+            <div
+              key={index}
+              className="absolute bg-green-500 rounded-full w-28 h-28 flex items-center justify-center text-center"
+              style={{
+                top: `calc(50% + ${y}px - 56px)`,
+                left: `calc(50% + ${x}px - 56px)`
+              }}
+            >
+              {sub}
+            </div>
+          );
+        })}
     </div>
-  )
+  );
 }
 
 export default App;
